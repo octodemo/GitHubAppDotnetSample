@@ -30,7 +30,7 @@ Connected https://smee.io/qrfeVRbFbffd6vD
 ```
 
 - [Register a GitHub App](https://developer.github.com/apps/building-your-first-github-app/#register-a-new-app-with-github)
-- Add the following configuration settings in an environment specific `appsettings.json` like for example `apsettings.Development.json`. The Webhook secret mneeds to be at least 16 characters in length.
+- Add the following configuration settings in an environment specific `appsettings.json` like for example `apsettings.Development.json`. The Webhook secret needs to be at least 16 characters.
 
 ```json
 {
