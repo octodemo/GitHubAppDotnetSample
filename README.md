@@ -35,8 +35,10 @@ Connected https://smee.io/qrfeVRbFbffd6vD
 ```json
 {
   "WebHooks:GitHub:SecretKey:default": "0123456789012345",
-  "GitHubApp:ApplicationId": 19892,
-  "GitHubApp:PrivateKey": "/path/to/private_key.pem"
+  "GitHubApp": {
+    "ApplicationId": 12345,
+    "PrivateKey": "/path/to/private_key.pem"
+  }
 }
 ```
 
