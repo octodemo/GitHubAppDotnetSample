@@ -29,8 +29,9 @@ Forwarding https://smee.io/qrfeVRbFbffd6vD to http://127.0.0.1:3000/api/webhooks
 Connected https://smee.io/qrfeVRbFbffd6vD
 ```
 
-- [Register a GitHub App](https://developer.github.com/apps/building-your-first-github-app/#register-a-new-app-with-github). The sample requires Read & Write access for Issues and a subscription to Issues events. When testing the https://smee.io/qrfeVRbFbffd6vD URL should be used for the URL fields.
-- Add the following configuration settings in an environment specific `appsettings.json` like for example `apsettings.Development.json`. The Webhook secret needs to be at least 16 characters.
+- [Register a GitHub App](https://developer.github.com/apps/building-your-first-github-app/#register-a-new-app-with-github). The sample requires Read & Write access for Issues and a subscription to Issues events. When testing the smee URL (like https://smee.io/qrfeVRbFbffd6vD) should be used for the URL fields.
+- Download the private key and you also need the Application ID.
+- Add the following configuration settings in an `appsettings.json` like for example `apsettings.Development.json`. The Webhook secret needs to be at least 16 characters.
 
 ```json
 {
