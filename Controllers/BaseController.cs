@@ -1,3 +1,6 @@
+using System;
+using System.Configuration;
+using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -15,30 +18,96 @@ namespace GitHubAppDotnetSample.Controllers
         {
             _logger = logger;
 
-            var appIdPath = ConfigurationPath.Combine(Constants.GitHubAppSectionKey, Constants.ApplicationId);
+            var jwtToken = getJwtToken(configuration);
 
-            var privateKeyPath = ConfigurationPath.Combine(Constants.GitHubAppSectionKey, Constants.PrivateKey);
-
-            var appId = configuration.GetSection(appIdPath);
-
-            var privateKey = configuration.GetSection(privateKeyPath);
-
-            var generator = new GitHubJwt.GitHubJwtFactory(
-                new GitHubJwt.FilePrivateKeySource(privateKey.Value),
-                    new GitHubJwt.GitHubJwtFactoryOptions
-                    {
-                        AppIntegrationId = int.Parse(appId.Value), // The GitHub App Id
-                        ExpirationSeconds = 600 // 10 minutes is the maximum time allowed
-                    }
-            );
-
-            var jwtToken = generator.CreateEncodedJwtToken();
+            if (string.IsNullOrEmpty(jwtToken))
+            {
+                throw new ConfigurationErrorsException("Unable to create JWT token: private key setting missing");
+            }
 
             // Pass the JWT as a Bearer token to Octokit.net
             appClient = new GitHubClient(new ProductHeaderValue(Constants.GitHubAppName))
             {
                 Credentials = new Credentials(jwtToken, AuthenticationType.Bearer)
             };
+
+        }
+
+        private string getJwtToken(IConfiguration configuration) {
+
+            var appIdPath = ConfigurationPath.Combine(Constants.GitHubAppSectionKey, Constants.ApplicationId);
+
+            var privateKeyString = ConfigurationPath.Combine(Constants.GitHubAppSectionKey, Constants.PrivateKey, Constants.PrivateKeyString);
+
+            var privateKeyBase64 = ConfigurationPath.Combine(Constants.GitHubAppSectionKey, Constants.PrivateKey, Constants.PrivateKeyBase64);
+
+            var privateKeyFile = ConfigurationPath.Combine(Constants.GitHubAppSectionKey, Constants.PrivateKey, Constants.PrivateKeyFile);
+
+            var appId = configuration.GetSection(appIdPath);
+
+            if (configuration.GetSection(privateKeyString).Exists())
+            {
+
+                _logger.LogInformation("Using private key string value");
+
+                var privateKey = configuration.GetSection(privateKeyString);
+
+                var generator = new GitHubJwt.GitHubJwtFactory(
+                new GitHubJwt.StringPrivateKeySource(privateKey.Value),
+                    new GitHubJwt.GitHubJwtFactoryOptions
+                    {
+                        AppIntegrationId = int.Parse(appId.Value), // The GitHub App Id
+                        ExpirationSeconds = 600 // 10 minutes is the maximum time allowed
+                    }
+                );
+
+                return generator.CreateEncodedJwtToken();
+            }
+            else if (configuration.GetSection(privateKeyBase64).Exists())
+            {
+
+                _logger.LogInformation("Using private key base64 encoded value");
+
+                var encodedKey = configuration.GetSection(privateKeyBase64);
+
+                byte[] data = Convert.FromBase64String(encodedKey.Value);
+                string decodedString = Encoding.UTF8.GetString(data);
+
+                var generator = new GitHubJwt.GitHubJwtFactory(
+                new GitHubJwt.StringPrivateKeySource(decodedString),
+                    new GitHubJwt.GitHubJwtFactoryOptions
+                    {
+                        AppIntegrationId = int.Parse(appId.Value), // The GitHub App Id
+                        ExpirationSeconds = 600 // 10 minutes is the maximum time allowed
+                    }
+                );
+
+                return generator.CreateEncodedJwtToken();
+
+            }
+            else if (configuration.GetSection(privateKeyFile).Exists())
+            {
+                _logger.LogInformation("Using private key file reference");
+
+                var privateKey = configuration.GetSection(privateKeyFile);
+
+                var generator = new GitHubJwt.GitHubJwtFactory(
+                new GitHubJwt.FilePrivateKeySource(privateKey.Value),
+                    new GitHubJwt.GitHubJwtFactoryOptions
+                    {
+                        AppIntegrationId = int.Parse(appId.Value), // The GitHub App Id
+                        ExpirationSeconds = 600 // 10 minutes is the maximum time allowed
+                    }
+                );
+
+                return generator.CreateEncodedJwtToken();
+            }
+            else
+            {
+                _logger.LogInformation("No private key setting configured");
+
+                return null;
+            }
 
         }
     }

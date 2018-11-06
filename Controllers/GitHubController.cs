@@ -17,6 +17,7 @@ namespace GitHubAppDotnetSample.Controllers
         [GitHubWebHook(EventName = "push", Id = "It")]
         public IActionResult HandlerForItsPushes(string[] events, JObject data)
         {
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
