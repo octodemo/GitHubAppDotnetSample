@@ -14,7 +14,6 @@
     <PackageReference Include="GitHubJwt" Version="0.0.3" />
     <PackageReference Include="Microsoft.AspNetCore.WebHooks.Receivers.GitHub" Version="1.0.0-preview2-final" />
     <PackageReference Include="octokit" Version="0.32.0" />
-    <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.5.0" />
   </ItemGroup>
 
 </Project>

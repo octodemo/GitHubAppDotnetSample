@@ -20,11 +20,6 @@ namespace GitHubAppDotnetSample.Controllers
 
             var jwtToken = getJwtToken(configuration);
 
-            if (string.IsNullOrEmpty(jwtToken))
-            {
-                throw new ConfigurationErrorsException("Unable to create JWT token: private key setting missing");
-            }
-
             // Pass the JWT as a Bearer token to Octokit.net
             appClient = new GitHubClient(new ProductHeaderValue(Constants.GitHubAppName))
             {
