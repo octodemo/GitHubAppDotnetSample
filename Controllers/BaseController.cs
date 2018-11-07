@@ -45,10 +45,10 @@ namespace GitHubAppDotnetSample.Controllers
 
                 _logger.LogInformation("Using private key string value");
 
-                var privateKey = configuration.GetSection(privateKeyString);
+                var privateKey = configuration.GetSection(privateKeyString).Value.Replace("\n",Environment.NewLine);
 
                 var generator = new GitHubJwt.GitHubJwtFactory(
-                new GitHubJwt.StringPrivateKeySource(privateKey.Value),
+                new GitHubJwt.StringPrivateKeySource(privateKey),
                     new GitHubJwt.GitHubJwtFactoryOptions
                     {
                         AppIntegrationId = int.Parse(appId.Value), // The GitHub App Id
