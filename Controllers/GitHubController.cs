@@ -1,4 +1,5 @@
 using System;
+using GitHubAppDotnetSample.Filters;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebHooks;
 using Microsoft.Extensions.Configuration;
@@ -8,11 +9,8 @@ using Octokit;
 
 namespace GitHubAppDotnetSample.Controllers
 {
-    public class GitHubController : BaseController
+    public class GitHubController : ControllerBase
     {
-        public GitHubController(IConfiguration configuration, ILogger<GitHubController> logger) : base(configuration, logger) {
-
-        }
 
         [GitHubWebHook(EventName = "push", Id = "It")]
         public IActionResult HandlerForItsPushes(string[] events, JObject data)
@@ -48,6 +46,16 @@ namespace GitHubAppDotnetSample.Controllers
             var installationId = (int)data["installation"]["id"];
             var owner = (string)data["repository"]["owner"]["login"];
             var repo = (string)data["repository"]["name"];
+
+            var appClient = (GitHubClient)ControllerContext.RouteData.Values[Constants.GitHubClient];
+
+            Console.WriteLine(appClient.BaseAddress.AbsolutePath);
+
+            if (appClient == null)
+            {
+                return Unauthorized();
+
+            }
 
             var response = await appClient.GitHubApps.CreateInstallationToken(installationId);
 
