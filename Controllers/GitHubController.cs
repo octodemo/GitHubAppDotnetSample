@@ -9,6 +9,7 @@ using Octokit;
 
 namespace GitHubAppDotnetSample.Controllers
 {
+    // this class is taken from the webhook sample in https://github.com/aspnet/AspLabs
     public class GitHubController : ControllerBase
     {
 
@@ -48,8 +49,6 @@ namespace GitHubAppDotnetSample.Controllers
             var repo = (string)data["repository"]["name"];
 
             var appClient = (GitHubClient)ControllerContext.RouteData.Values[Constants.GitHubClient];
-
-            Console.WriteLine(appClient.BaseAddress.AbsolutePath);
 
             if (appClient == null)
             {
