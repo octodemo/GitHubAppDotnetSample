@@ -53,7 +53,6 @@ namespace GitHubAppDotnetSample.Controllers
             if (appClient == null)
             {
                 return Unauthorized();
-
             }
 
             var response = await appClient.GitHubApps.CreateInstallationToken(installationId);
