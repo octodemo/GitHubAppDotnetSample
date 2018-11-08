@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore;
+﻿using GitHubAppDotnetSample;
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 
 namespace GitHubAppDotnetHelloWorld
