@@ -42,6 +42,14 @@ Connected https://smee.io/qrfeVRbFbffd6vD
 }
 ```
 
+- Start the `GitHubAppDotnetSample` GitHub App
+
+```
+dotnet run
+```
+
+## Private key settings
+
 There are three ways to add the private key:
 
 - `GitHubApp:PrivateKey:file`
@@ -51,8 +59,4 @@ There are three ways to add the private key:
 - `GitHubApp:PrivateKey:base64`
   - As a Base64 encoded string using fo example: `cat path/to/your/private-key.pem | openssl base64 | pbcopy`
 
-- Start the `GitHubAppDotnetSample` GitHub App
 
-```
-dotnet run
-```
