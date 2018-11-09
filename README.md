@@ -37,10 +37,19 @@ Connected https://smee.io/qrfeVRbFbffd6vD
 {
   "WebHooks:GitHub:SecretKey:default": "0123456789012345",
   "GitHubApp:ApplicationId": 19892,
-  "GitHubApp:PrivateKey:file": "/path/to/private_key.pem"
+  "GitHubApp:PrivateKey:file": "path/to/your/private-key.pem"
 
 }
 ```
+
+There are three ways to add the private key:
+
+- `GitHubApp:PrivateKey:file`
+  - As a local path to the private key file
+- `GitHubApp:PrivateKey:string`
+  - As a string value. You can replace new lines using: `awk '{printf "%s\\n", $0}' path/to/your/private-key.pem`
+- `GitHubApp:PrivateKey:base64`
+  - As a Base64 encoded string using fo example: `cat path/to/your/private-key.pem | openssl base64 | pbcopy`
 
 - Start the `GitHubAppDotnetSample` GitHub App
 
