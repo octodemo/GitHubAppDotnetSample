@@ -1,6 +1,6 @@
 # GitHubAppDotnetSample
 
-A sample GitHub App written in .NET Core.
+A sample GitHub App written in .NET Core with Azure Pipelines for build and deploy.
 
 The boilerplate code for this example is based on [GitHubCoreReceiver](https://github.com/aspnet/AspLabs/tree/master/src/WebHooks/samples/GitHubCoreReceiver) with JWT token authentication based on [Working with GitHub Apps](https://octokitnet.readthedocs.io/en/latest/github-apps/) in the Octokit.net documentation.
 
