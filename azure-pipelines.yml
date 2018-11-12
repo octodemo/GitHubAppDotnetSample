@@ -14,3 +14,4 @@ steps:
   displayName: 'dotnet build $(buildConfiguration)'
 - script: dotnet publish --output $(Build.ArtifactStagingDirectory)
 - task: PublishBuildArtifacts@1
+  zipAfterPublish: True
