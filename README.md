@@ -1,6 +1,6 @@
 # GitHubAppDotnetSample
 
-[![Releaae](https://vsrm.dev.azure.com/octodemo-readingtimedemo/_apis/public/Release/badge/c759e395-e69d-415c-b45a-7087d8b65f3e/1/1)]
+[![Release](https://vsrm.dev.azure.com/octodemo-readingtimedemo/_apis/public/Release/badge/c759e395-e69d-415c-b45a-7087d8b65f3e/1/1)](https://dev.azure.com/octodemo-readingtimedemo/GitHubAppDotnetSample/)
 
 A sample GitHub App written in .NET Core with Azure Pipelines for build and deploy.
 
